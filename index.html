@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vecorion Player — assista, compre e publique vídeos</title>
+<meta name="description" content="Plataforma para publicar, vender e assistir vídeos e conjuntos. Pague com Pix ou cartão.">
+<meta name="theme-color" content="#0B0E14">
+<!--OG-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 60'%3E%3Cpath d='M60 30C48 12 12 12 12 30S48 48 60 30C72 12 108 12 108 30S72 48 60 30Z' fill='none' stroke='%232F8CFF' stroke-width='8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0E14;--s1:#141923;--s2:#1C2331;--tx:#EAF0F8;--mu:#8D99AE;--pr:#2F8CFF;--ac:#36D6A0;--pd:#FFB938;--dg:#FF6B6B;--halo:#5CE1E6;--ink:#06101F;
+--d1:120ms;--d2:220ms;--d3:400ms;--eo:cubic-bezier(.2,.8,.2,1);--io:cubic-bezier(.4,0,.2,1);
+--sans:Inter,system-ui,sans-serif;--head:Sora,Inter,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 var(--sans);padding-bottom:68px}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--halo);outline-offset:2px}
+h1,h2,h3{font-family:var(--head);line-height:1.2;margin:0}
+main:focus{outline:none}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--s2);padding:8px 12px;z-index:9}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--s1);position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:8px;font:700 16px var(--head)}
+.lg{width:48px;height:24px}.brand span{display:none}
+#sf{flex:1}#sf input{width:100%;min-height:44px;border-radius:999px;border:1px solid var(--s2);background:var(--bg);color:var(--tx);padding:0 16px;font:inherit}
+header nav{display:none;gap:16px;align-items:center}
+.bot{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:var(--s1);border-top:1px solid var(--s2);z-index:5}
+.bot a,.bot button,header nav a,header nav button{min-height:48px;display:flex;align-items:center;padding:0 12px;background:none;border:0;color:var(--tx);font:inherit;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:12px;border:0;font:600 16px var(--sans);cursor:pointer;background:var(--pr);color:var(--ink);transition:transform var(--d1) var(--eo),filter var(--d1)}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}.btn.go{background:var(--ac)}.btn.ghost{background:none;border:1px solid var(--mu);color:var(--tx)}
+.btn[disabled]{opacity:.5;cursor:wait}
+.hero{position:relative;overflow:hidden;padding:48px 16px 40px;background:radial-gradient(60% 90% at 85% 40%,rgba(47,140,255,.28),transparent 70%),var(--bg);
+ background-image:radial-gradient(60% 90% at 85% 40%,rgba(47,140,255,.28),transparent 70%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E")}
+.hero .in{position:relative;max-width:1100px;margin:0 auto}
+.hero h1{font-size:clamp(28px,6vw,48px);max-width:14ch}
+.hero p{color:var(--mu);max-width:36ch;margin:12px 0 24px}
+.orb{position:absolute;right:-120px;top:-40px;width:560px;height:420px;opacity:.7}
+.orb ellipse{fill:none;stroke:var(--pr);stroke-width:1}
+.mark{width:min(260px,60vw);height:auto;margin-bottom:20px}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:min(72vw,280px);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.rail>*{scroll-snap-align:start}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
+.chips a[aria-current]{background:var(--pr);color:var(--ink)}
+.chips a{white-space:nowrap;padding:8px 16px;border-radius:999px;background:var(--s2);min-height:40px;display:flex;align-items:center}
+.card{display:block;transition:transform var(--d2) var(--eo)}
+.cover{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--s2);display:grid;place-items:center}
+.cover img{width:100%;height:100%;object-fit:cover}.ph{font-size:48px;color:var(--mu)}
+.tag{position:absolute;left:8px;top:8px;padding:2px 10px;border-radius:999px;font:600 12px var(--sans);color:var(--ink)}
+.tag.free{background:var(--ac)}.tag.paid{background:var(--pd)}.tag.col{left:auto;right:8px;background:var(--tx)}
+.card h3{font-size:16px;margin:8px 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.price{margin:0;color:var(--mu);font-size:14px}
+section h2{font-size:20px;margin:24px 0 12px}
+.stage{position:relative;width:100%;max-height:80vh;border-radius:12px;overflow:hidden;background:var(--s1)}
+.stage::before{content:"";position:absolute;inset:0;background:var(--cover) center/cover;filter:blur(24px);opacity:.5}
+.stage>*{position:relative;width:100%;height:100%;object-fit:contain;display:block}
+.prod h1{font-size:28px;margin:16px 0 8px}.prod .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.prod .desc{color:var(--mu);max-width:65ch;white-space:pre-line}
+.note{color:var(--mu);font-size:14px;margin:8px 0 0}
+.lessons{list-style:none;padding:0;margin:0;max-width:65ch}
+.lessons button{width:100%;text-align:left;min-height:48px;padding:0 16px;margin-bottom:8px;border:0;border-radius:12px;background:var(--s1);color:var(--tx);font:inherit;cursor:pointer}
+.lessons button[disabled]{opacity:.55;cursor:not-allowed}
+form.lf{display:grid;gap:12px;max-width:380px}
+.lf label{display:grid;gap:4px;font-size:14px;color:var(--mu)}
+.lf input{min-height:48px;border-radius:12px;border:1px solid var(--s2);background:var(--s1);color:var(--tx);padding:0 12px;font:inherit}
+.lf .row{display:flex;gap:8px;flex-wrap:wrap}
+#msg{position:fixed;left:16px;right:16px;bottom:80px;z-index:9;pointer-events:none}
+#msg p{margin:0 auto;max-width:480px;padding:12px 16px;border-radius:12px;background:var(--s2);border-left:4px solid var(--ac)}
+#msg p.err{border-color:var(--dg)}
+.ld{display:grid;place-items:center;padding:48px 0}.ld svg{width:96px;height:48px}
+.empty{color:var(--mu);padding:16px 0}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes spin{from{transform:translateX(-12px)}to{transform:none}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.inf{stroke-dasharray:1;animation:draw 900ms var(--io) both}
+.land{animation:spin 1.2s var(--io) both}
+.hero .in>*{animation:rise var(--d3) var(--eo) both}
+@media(hover:hover){.card:hover{transform:translateY(-4px)}}
+@media(max-width:767px){.stage::before{filter:none;opacity:.2}.orb{display:none}}
+@media(min-width:768px){
+ body{padding-bottom:0}.brand span{display:inline}.lg{width:56px;height:28px}.bot{display:none}header nav{display:flex}#msg{bottom:16px}
+ #sf{max-width:420px;margin:0 auto}.rail{grid-auto-columns:260px}}
+@media(min-width:768px) and (prefers-reduced-motion:no-preference){.orb{animation:orbit 60s linear infinite;will-change:transform}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs><linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#2F8CFF"/><stop offset="1" stop-color="#5CE1E6"/></linearGradient>
+ <clipPath id="ec"><circle cx="86" cy="30" r="11"/></clipPath></defs>
+ <symbol id="logo" viewBox="0 0 120 60">
+  <path class="inf" pathLength="1" d="M60 30C48 12 12 12 12 30S48 48 60 30C72 12 108 12 108 30S72 48 60 30Z" fill="none" stroke="url(#gr)" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="86" cy="30" r="11" fill="#1B5FBF"/>
+  <g clip-path="url(#ec)"><g class="land"><path d="M78 24c4-3 8-1 7 3s-5 2-6 6-3 1-4-3 0-4 3-6z" fill="#36D6A0"/><path d="M89 33c3-1 6 1 5 4s-5 3-6 1 0-4 1-5z" fill="#36D6A0"/></g></g>
+ </symbol>
+</svg>
+<a class="skip" href="#app">Pular para o conteúdo</a>
+<header>
+ <a class="brand" href="/" data-link aria-label="Vecorion Player, início"><svg class="lg" aria-hidden="true"><use href="#logo"/></svg><span>Vecorion Player</span></a>
+ <form id="sf" role="search"><input name="q" type="search" placeholder="Buscar vídeos e conjuntos" aria-label="Buscar vídeos e conjuntos"></form>
+ <nav id="nv1" aria-label="Principal"></nav>
+</header>
+<main id="app" tabindex="-1"></main>
+<nav id="nv2" class="bot" aria-label="Principal (celular)"></nav>
+<div id="msg" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+/* PONTO DE INTEGRAÇÃO: preencha com os valores públicos do seu projeto (nunca coloque chaves secretas aqui). */
+const CFG={SUPABASE_URL:"",SUPABASE_ANON_KEY:"",CLOUDINARY_CLOUD_NAME:""};
+
+const $=s=>document.querySelector(s),app=$('#app'),state={user:null};let last='',poll;
+const LOAD='<div class="ld" role="status" aria-label="Carregando"><svg viewBox="0 0 120 60" aria-hidden="true"><use href="#logo"/></svg></div>';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const brl=n=>Number(n).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const safe=u=>/^https:\/\/res\.cloudinary\.com\/[^'"()\s<>]+$/.test(u||'')?u:'';
+const thumb=(u,w=640)=>safe(u)?safe(u).replace('/upload/',`/upload/c_fill,ar_16:9,w_${w},f_auto,q_auto/`):'';
+const sb=(CFG.SUPABASE_URL&&window.supabase)?supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
+let t0;const say=(m,err)=>{$('#msg').innerHTML=`<p class="${err?'err':''}">${esc(m)}</p>`;clearTimeout(t0);t0=setTimeout(()=>$('#msg').innerHTML='',5000)};
+const go=p=>{history.pushState({},'',p);render()};
+const noCfg=()=>app.innerHTML='<section class="wrap"><h1>Configuração pendente</h1><p class="empty">Preencha SUPABASE_URL, SUPABASE_ANON_KEY e CLOUDINARY_CLOUD_NAME no início do script do index.html.</p></section>';
+
+async function callFn(n,b){
+ const {data:{session}}=await sb.auth.getSession();
+ const r=await fetch('/.netlify/functions/'+n,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+(session?.access_token||'')},body:JSON.stringify(b)});
+ if(r.status===404)throw new Error('Esta função ainda não foi implantada.');
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok)throw new Error(j.error||'Algo deu errado. Tente novamente.');
+ return j}
+
+const card=(i,k)=>{const th=thumb(i.cover_url),p=i.access_type==='paid';
+ return `<a class="card" href="/${k}/${esc(i.slug)}" data-link><div class="cover">${th?`<img src="${esc(th)}" alt="Capa de ${esc(i.title)}" loading="lazy">`:'<span class="ph" aria-hidden="true">∞</span>'}<span class="tag ${p?'paid':'free'}">${p?'Pago':'Grátis'}</span>${k==='c'?'<span class="tag col">Conjunto</span>':''}</div><h3>${esc(i.title)}</h3><p class="price">${p?brl(i.price):'Gratuito'}</p></a>`};
+const rail=(t,list,k)=>list.length?`<section><h2>${t}</h2><div class="rail">${list.map(i=>card(i,k)).join('')}</div></section>`:'';
+
+function navs(){const h=`<a href="/" data-link>Início</a><a href="/meus-videos" data-link>Meus Vídeos</a>${state.user?'<button data-out>Sair</button>':'<a href="/login" data-link>Entrar</a>'}`;$('#nv1').innerHTML=h;$('#nv2').innerHTML=h}
+
+async function home(){
+ const sp=new URLSearchParams(location.search),q=(sp.get('q')||'').replace(/[,()%*]/g,'').trim(),cat=sp.get('cat');
+ app.innerHTML=`<div class="hero"><svg class="orb" viewBox="0 0 560 420" aria-hidden="true"><g><ellipse cx="280" cy="210" rx="260" ry="90"/><ellipse cx="280" cy="210" rx="200" ry="150" opacity=".5"/><ellipse cx="280" cy="210" rx="130" ry="190" opacity=".25"/></g></svg>
+ <div class="in"><svg class="mark" viewBox="0 0 120 60" role="img" aria-label="Vecorion Player"><use href="#logo"/></svg><h1>Seu vídeo, o mundo inteiro assistindo.</h1><p>Assista, compre e publique com uma única conta.</p><a class="btn" href="#vitrine">Explorar vídeos</a></div></div>
+ <div class="wrap" id="vitrine"><div id="cats" class="chips"></div><div id="lists">${LOAD}</div></div>`;
+ if(!sb)return noCfg();
+ const {data:cats}=await sb.from('categories').select('id,name,slug').order('name');
+ $('#cats').innerHTML=`<a href="/" data-link${cat?'':' aria-current="page"'}>Todas</a>`+(cats||[]).map(c=>`<a href="/?cat=${esc(c.slug)}" data-link${c.slug===cat?' aria-current="page"':''}>${esc(c.name)}</a>`).join('');
+ const f='slug,title,cover_url,access_type,price';
+ let vq=sb.from('videos').select(f).eq('status','PUBLISHED').eq('collection_only',false).order('created_at',{ascending:false}).limit(24);
+ let cq=sb.from('collections').select(f).eq('status','PUBLISHED').order('created_at',{ascending:false}).limit(24);
+ const cid=(cats||[]).find(c=>c.slug===cat)?.id;
+ if(cid){vq=vq.eq('category_id',cid);cq=cq.eq('category_id',cid)}
+ if(q){const s=`title.ilike.%${q}%,description.ilike.%${q}%`;vq=vq.or(s);cq=cq.or(s)}
+ const [v,c]=await Promise.all([vq,cq]),vs=v.data||[],cs=c.data||[];
+ $('#lists').innerHTML=(vs.length||cs.length)?rail('Recentes',vs,'v')+rail('Conjuntos',cs,'c')+rail('Grátis',vs.filter(i=>i.access_type==='free'),'v')+rail('Pagos',vs.filter(i=>i.access_type==='paid'),'v'):'<p class="empty">Nada por aqui ainda.</p>'}
+
+async function play(videoId,publicId,paid){
+ if(!paid&&!publicId)throw new Error('O vídeo ainda está em processamento.');
+ const src=paid?(await callFn('play',{video_id:videoId})).url:`https://res.cloudinary.com/${CFG.CLOUDINARY_CLOUD_NAME}/video/upload/f_auto,q_auto/${publicId}`;
+ $('#stage').innerHTML=`<video controls autoplay playsinline src="${esc(src)}"></video>`}
+
+async function product(k,slug){
+ if(!sb)return noCfg();
+ let qy=sb.from(k==='v'?'videos':'collections').select('*').eq('slug',slug).eq('status','PUBLISHED');
+ if(k==='v')qy=qy.eq('collection_only',false);
+ const {data:i}=await qy.maybeSingle();
+ if(!i){app.innerHTML='<section class="wrap"><h1>Conteúdo não encontrado</h1></section>';return}
+ document.title=i.title+' — Vecorion Player';
+ const paid=i.access_type==='paid';let ok=!paid;
+ if(paid&&state.user){const {data}=await sb.rpc('has_access',{p_video:k==='v'?i.id:null,p_collection:k==='c'?i.id:null});ok=!!data}
+ let L=[];
+ if(k==='c'){const {data}=await sb.from('collection_lessons').select('title,lesson_order,video_id,videos(cloudinary_public_id)').eq('collection_id',i.id).order('lesson_order');L=data||[]}
+ const ar=(k==='v'&&i.width&&i.height)?`${+i.width}/${+i.height}`:'16/9',cv=safe(i.cover_url),th=thumb(i.cover_url,1280);
+ const label=ok?(k==='c'?'Continuar conjunto':'Assistir'):(k==='c'?'Comprar conjunto':`Comprar por ${brl(i.price)}`);
+ app.innerHTML=`<article class="wrap prod"><div id="stage" class="stage" style="aspect-ratio:${ar};${cv?`--cover:url('${esc(cv)}')`:''}">${th?`<img src="${esc(th)}" alt="Capa de ${esc(i.title)}">`:''}</div>
+ <h1>${esc(i.title)}</h1><div class="meta"><span class="price">${paid?brl(i.price):'Gratuito'}</span>${k==='c'?`<span class="price">${L.length} aulas</span>`:''}<button class="btn ${ok?'go':''}" id="act">${esc(label)}</button></div>
+ <p class="note">${paid&&!ok?'Compra única. Acesso liberado após a confirmação do pagamento. Compras não têm reembolso; em caso de problema técnico, escreva para vecorionsuporte@gmail.com.':paid?'':'Gratuito. Basta apertar o play.'}</p>
+ <p class="desc">${esc(i.description)}</p>
+ ${k==='c'?`<h2>Aulas</h2><ol class="lessons">${L.map((l,n)=>`<li><button data-n="${n}" ${ok?'':'disabled'}>${l.lesson_order}. ${esc(l.title)}</button></li>`).join('')||'<li class="empty">Este conjunto ainda não tem aulas.</li>'}</ol>`:''}</article>`;
+ const lesson=async l=>{if(!l)throw new Error('Este conjunto ainda não tem aulas.');await play(l.video_id,l.videos?.cloudinary_public_id,paid)};
+ $('#act').onclick=async e=>{const b=e.currentTarget;b.disabled=true;
+  try{
+   if(ok)k==='v'?await play(i.id,i.cloudinary_public_id,paid):await lesson(L[0]);
+   else if(!state.user)go('/login?next='+encodeURIComponent(location.pathname));
+   else{pix(await callFn('checkout',{kind:k==='v'?'video':'collection',id:i.id}),k,i.id)}
+  }catch(x){say(x.message,1)}b.disabled=false};
+ app.querySelectorAll('.lessons button').forEach(b=>b.onclick=()=>lesson(L[b.dataset.n]).catch(x=>say(x.message,1)))}
+
+function pix(r,k,id){
+ clearInterval(poll);$('#pix')?.remove();
+ const el=document.createElement('section');el.id='pix';
+ el.innerHTML=`<h2>Pague com Pix</h2>${r.qr_code_base64?`<img src="data:image/png;base64,${esc(r.qr_code_base64)}" alt="QR Code do Pix" width="200" height="200" style="background:#fff;padding:8px;border-radius:12px">`:''}<p class="note">Escaneie ou copie o código. A liberação é automática.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><input readonly aria-label="Código Pix" value="${esc(r.qr_code)}" style="flex:1;min-width:200px;min-height:48px;border-radius:12px;border:1px solid var(--s2);background:var(--s1);color:var(--tx);padding:0 12px"><button class="btn ghost" id="cp">Copiar código</button></div><p class="note">Aguardando pagamento. Assim que confirmar, liberamos tudo.</p>`;
+ $('.prod .meta').after(el);
+ $('#cp').onclick=()=>navigator.clipboard.writeText(r.qr_code).then(()=>say('Código copiado.'),()=>say('Não foi possível copiar. Selecione o código e copie.',1));
+ let n=0;poll=setInterval(async()=>{if(++n>225)return clearInterval(poll);
+  const {data}=await sb.rpc('has_access',{p_video:k==='v'?id:null,p_collection:k==='c'?id:null});
+  if(data){clearInterval(poll);say('Pagamento aprovado. Seu acesso foi liberado.');render()}},4000)}
+
+function login(){
+ if(!sb)return noCfg();
+ app.innerHTML=`<section class="wrap"><h1>Entrar</h1><form id="lf" class="lf"><label>E-mail<input name="email" type="email" autocomplete="email" required></label><label>Senha<input name="password" type="password" autocomplete="current-password" required></label><p class="note">Mínimo de 8 caracteres.</p>
+ <div class="row"><button class="btn" value="in">Entrar</button><button class="btn ghost" value="up">Criar conta</button><button class="btn ghost" value="rec" formnovalidate>Esqueci minha senha</button></div></form></section>`}
+
+async function mine(){
+ if(!sb)return noCfg();
+ if(!state.user)return go('/login?next=/meus-videos');
+ const {data}=await sb.from('purchases').select('id,videos(slug,title,cover_url,access_type,price),collections(slug,title,cover_url,access_type,price)').eq('status','approved').order('purchased_at',{ascending:false});
+ const items=(data||[]).map(p=>p.collections?card(p.collections,'c'):p.videos?card(p.videos,'v'):'').join('');
+ app.innerHTML=`<section class="wrap"><h1>Meus Vídeos</h1>${items?`<div class="rail" style="margin-top:16px">${items}</div>`:'<p class="empty">Você ainda não comprou nenhum vídeo.</p>'}</section>`}
+
+async function render(){
+ clearInterval(poll);last=location.pathname+location.search;app.innerHTML=LOAD;navs();window.scrollTo(0,0);document.title='Vecorion Player — assista, compre e publique vídeos';
+ const p=location.pathname;let m;
+ try{
+  if(p==='/'||p==='/index.html')await home();
+  else if(m=p.match(/^\/([vc])\/([\w-]+)$/))await product(m[1],m[2]);
+  else if(p==='/login')login();
+  else if(p==='/meus-videos')await mine();
+  else app.innerHTML='<section class="wrap"><h1>Página não encontrada</h1></section>';
+ }catch(x){say('Algo deu errado. Tente novamente.',1)}}
+
+document.addEventListener('click',e=>{
+ const a=e.target.closest('a[data-link]');
+ if(a){e.preventDefault();go(a.getAttribute('href'));return}
+ if(e.target.closest('[data-out]'))sb.auth.signOut().then(()=>go('/'))});
+document.addEventListener('submit',async e=>{
+ if(e.target.id==='sf'){e.preventDefault();go('/?q='+encodeURIComponent(new FormData(e.target).get('q')));return}
+ if(e.target.id!=='lf')return;
+ e.preventDefault();
+ const f=new FormData(e.target),em=f.get('email'),pw=f.get('password'),mode=e.submitter?.value||'in';
+ try{
+  if(mode==='up'){const {error}=await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:location.origin}});if(error)throw error;say('Enviamos um link de confirmação ao seu e-mail.')}
+  else if(mode==='rec'){const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin});if(error)throw error;say('Enviamos um link para o seu e-mail.')}
+  else{const {error}=await sb.auth.signInWithPassword({email:em,password:pw});if(error)throw error;const n=new URLSearchParams(location.search).get('next');go(n&&/^\/(?!\/)/.test(n)?n:'/')}
+ }catch(x){say(mode==='in'?'E-mail ou senha incorretos.':'Não foi possível concluir. Tente novamente.',1)}});
+window.addEventListener('popstate',()=>{if(location.pathname+location.search!==last)render()});
+
+(async()=>{
+ if(sb){const {data:{session}}=await sb.auth.getSession();state.user=session?.user||null;
+  sb.auth.onAuthStateChange((_e,s)=>{state.user=s?.user||null;navs()})}
+ render()})();
+</script>
+</body>
+</html>

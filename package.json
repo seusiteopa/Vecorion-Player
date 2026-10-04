@@ -1,0 +1,1 @@
+{ "name": "vecorion-player", "private": true, "dependencies": { "cloudinary": "^2.5.0" } }
